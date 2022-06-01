@@ -113,6 +113,7 @@ CREATE TABLE Student_ParentInfo
   (
    Parental_Code Char(9) Primary Key
   ,Parental_ID Char(7) Unique
+  ,Student_Code Char(9) Foreign Key REFERENCES Student_Info(Student_Code)
   ,First_Name Varchar(75)
   ,Last_Name Varchar(75)
   ,Parent_Type Varchar(20)
@@ -132,6 +133,7 @@ CREATE TABLE Student_ParentInfo
 ;
 
 GO
+
 ;
 
 CREATE TRIGGER trg_Student_ParentInfo_UpdateModifiedDate
