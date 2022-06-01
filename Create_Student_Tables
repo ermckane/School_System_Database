@@ -154,7 +154,8 @@ AS
 
 CREATE TABLE Student_History
   (
-   Student_Code Char(9) Foreign Key REFERENCES Student_Info(Student_Code)
+   Student_History_Code Char(9) Primary Key
+  ,Student_Code Char(9) Foreign Key REFERENCES Student_Info(Student_Code)
   ,School_Code Char(12) Foreign Key REFERENCES School_Info(School_Code)
   ,Start_Date Date
   ,End_Date Date
@@ -178,3 +179,4 @@ AS
   SET Date_Modified = CURRENT_TIMESTAMP
   FROM Inserted as I
 	WHERE Student_History.Date_Modified = I.Date_Modified
+
