@@ -1,3 +1,6 @@
+--Need to Donwload data used. Will add in future.
+--Need to add comments to understand what is happening.
+
 
 Select top 10000 name into #Name_Last
 from sql_practice.dbo.last_names
