@@ -56,7 +56,7 @@ CREATE TRIGGER trg_School_History_UpdateModifiedDate
 ON School_History
 AFTER UPDATE
 AS
-	UPDATE School_History
-	SET Date_Modified = CURRENT_TIMESTAMP
-	FROM Inserted AS I
-	  WHERE School_History.Date_Modified = I.Date_Modified
+  UPDATE School_History
+  SET Date_Modified = CURRENT_TIMESTAMP
+  FROM Inserted AS I
+     WHERE School_History.Date_Modified = I.Date_Modified
