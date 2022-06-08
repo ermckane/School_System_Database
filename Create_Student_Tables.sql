@@ -24,7 +24,7 @@ CREATE TABLE Student_EmergencyContact
   )
 ;
 
-Go
+GO
 
 ;
 
