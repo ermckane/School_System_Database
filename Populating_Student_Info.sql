@@ -1,21 +1,24 @@
---Performing the creation of name in a practice database so that the data can be manipulated without interfering with main database.
+--CREATING FIRST_NAME, MIDDLE_NAME, LAST_NAME,  Student_Code, and Student_ID
+
+--Performing the creation of Student_Names in a practice database so that the data can be manipulated without interfering with main database.
+--Will then INSERT INTO main database after.
 --Randomly selecting names for cross join later. 
 
-SELECT top 10000 name INTO #Name_Last
+SELECT TOP 10000 name INTO #Name_Last
 FROM sql_practice.dbo.last_names
 ORDER BY newid()
 ;
 
 
 
-SELECT top 5000 first_name INTO #Name_First
+SELECT TOP 5000 first_name INTO #Name_First
 FROM sql_practice.dbo.first_names
 ORDER BY newid()
 ;
 
 
 
-SELECT top 10000 name AS  Middle_Name INTO #Name_Middle
+SELECT TOP 10000 name AS  Middle_Name INTO #Name_Middle
 FROM sql_practice.dbo.last_names
 ORDER BY newid()
 ;
