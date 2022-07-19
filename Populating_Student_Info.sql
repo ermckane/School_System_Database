@@ -2,33 +2,30 @@
 
 --Performing the creation of Student_Names in a practice database so that the data can be manipulated without interfering with main database.
 --Will then INSERT INTO main database after.
---Randomly selecting names for cross join later. 
+
+--Randomly selecting last_names for cross join later. 
 
 SELECT TOP 10000 name INTO #Name_Last
 FROM sql_practice.dbo.last_names
 ORDER BY newid()
 ;
 
-
+--Randomly selecting first_names for cross join later. 
 
 SELECT TOP 5000 first_name INTO #Name_First
 FROM sql_practice.dbo.first_names
 ORDER BY newid()
 ;
 
-
+--Randomly selecting middle_names for cross join later. 
 
 SELECT TOP 10000 name AS  Middle_Name INTO #Name_Middle
 FROM sql_practice.dbo.last_names
 ORDER BY newid()
 ;
 
-
-SELECT * INTO #All_Name
-FROM #Name_First
-CROSS JOIN #Name_Last
-;
-
+--Combining First_Name and Last_Name only because creating 500,000,000,000 combinations is an resource and time demanding process.
+--Combine with Middle_Name later.
 
 SELECT top 10000 name AS Last_Name, first_name AS First_Name INTO #First_Last_Name
 FROM #Name_First
