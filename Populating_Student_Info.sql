@@ -1,40 +1,39 @@
---Need to add comments and add original data files
+--Performing the creation of name in a practice database so that the data can be manipulated without interfering with main database.
+--Randomly selecting names for cross join later. 
 
-Select top 10000 name into #Name_Last
-from sql_practice.dbo.last_names
-order by newid()
+SELECT top 10000 name INTO #Name_Last
+FROM sql_practice.dbo.last_names
+ORDER BY newid()
 ;
 
 
 
-select top 5000 first_name into #Name_First
-from sql_practice.dbo.first_names
-order by newid()
+SELECT top 5000 first_name INTO #Name_First
+FROM sql_practice.dbo.first_names
+ORDER BY newid()
 ;
 
 
 
-select top 10000 name as Middle_Name into #Name_Middle
-from sql_practice.dbo.last_names
-order by newid()
+SELECT top 10000 name AS  Middle_Name INTO #Name_Middle
+FROM sql_practice.dbo.last_names
+ORDER BY newid()
 ;
 
 
-
-select * into #All_Name
-from #Name_First
-cross join #Name_Last
+SELECT * INTO #All_Name
+FROM #Name_First
+CROSS JOIN #Name_Last
 ;
 
 
-
-select top 10000 name as Last_Name, first_name as First_Name into #First_Last_Name
-from #Name_First
-cross join #Name_Last
-order by newid()
+SELECT top 10000 name AS Last_Name, first_name AS First_Name INTO #First_Last_Name
+FROM #Name_First
+CROSS JOIN #Name_Last
+ORDER BY newid()
 ;
 
-
+--Formtatting data so presentation is consistent.
 
 UPDATE #Name_Middle
 SET Middle_Name=UPPER(LEFT(Middle_Name,1))+LOWER(SUBSTRING(Middle_Name,2,LEN(Middle_Name)))
@@ -46,6 +45,7 @@ UPDATE #First_Last_Name
 SET Last_Name=UPPER(LEFT(Last_Name,1))+LOWER(SUBSTRING(Last_Name,2,LEN(Last_Name)))
 ;
 
+--Deleting and recreating temp table in order to run script again in same session.
 
 DROP TABLE IF EXISTS #Student_Name
 CREATE TABLE #Student_Name
@@ -57,7 +57,7 @@ CREATE TABLE #Student_Name
   )
  ;
 
-
+--Creating table of student name combined from first, middle, and last name.
 
 WITH Firstlast 
 AS
@@ -98,7 +98,7 @@ AS
     SELECT
 	 Rank_C
 	,CASE
-		WHEN LEN(Student_Code_Unfixed) > 9 THEN Student_Code_Unfixed / 4
+		WHEN LEN(Student_Code_Unfixed) > 9 THEN Student_Code_Unfixed / 4	--This isnures all the student codes are the same length
 		WHEN LEN(Student_Code_Unfixed) = 8 THEN Student_Code_Unfixed * 10
 		WHEN LEN(Student_Code_Unfixed) = 7 THEN Student_Code_Unfixed * 100
 		     ELSE Student_Code_Unfixed
@@ -119,11 +119,13 @@ AS
 AS
   (
    SELECT  
-	CONCAT(LEFT(ABS(CAST(CAST(NEWID() AS varbinary) AS int)), 3) 
+      CONCAT(
+	 LEFT(ABS(CAST(CAST(NEWID() AS varbinary) AS int)), 3) 					--Selecting random numbers from NEWID() for Social Security #
 	,'-'
 	,SUBSTRING(CAST(ABS(CAST(CAST(NEWID() AS varbinary) AS int)) AS Char),3, 2)
         ,'-'
-	,SUBSTRING(CAST(ABS(CAST(CAST(NEWID() AS varbinary) AS int)) AS Char),4, 4)) AS Social_Security
+	,SUBSTRING(CAST(ABS(CAST(CAST(NEWID() AS varbinary) AS int)) AS Char),4, 4)
+            ) AS Social_Security
         ,ROW_NUMBER() OVER(ORDER BY NEWID()) AS Rank_S
     FROM #Student_Name
    )
